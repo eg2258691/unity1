@@ -11,14 +11,23 @@ public class playermovement : NetworkBehaviour
         GetComponent<MeshRenderer>().material.color = Color.red;
         }
 
+        [Command]
+        void CmdArriba()
+        {
 
+            Destroy(gameObject);
+        }
      void OnCollisionEnter(Collision collision)
         {   
             var hit = collision.gameObject;
             var hitPlayer = hit.GetComponent<playermovement>();
             if ((hitPlayer != null) )
             {
-                Destroy(gameObject);
+                
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    CmdArriba();
+                }
                 //transform.position = new Vector3(10,0,10);
             //Destroy(gameObject);
             }
