@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class playermovement : NetworkBehaviour
 {   
     
+    bool triggered = false;
     public override void OnStartLocalPlayer()
         {
         GetComponent<MeshRenderer>().material.color = Color.red;
@@ -21,13 +22,10 @@ public class playermovement : NetworkBehaviour
         {   
             var hit = collision.gameObject;
             var hitPlayer = hit.GetComponent<playermovement>();
-            if ((hitPlayer != null) )
+            if (hitPlayer != null )
             {
-                
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    CmdArriba();
-                }
+                triggered = true;
+    
                 //transform.position = new Vector3(10,0,10);
             //Destroy(gameObject);
             }
@@ -45,6 +43,11 @@ public class playermovement : NetworkBehaviour
 
         transform.Translate(x, 0, z);
         
+        if (Input.GetKeyDown(KeyCode.Space) && triggered)
+        {
+            // Command function is called from the client, but invoked on the server
+            CmdArriba();
+        }
         
           
     }
